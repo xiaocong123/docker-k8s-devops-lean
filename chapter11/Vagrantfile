@@ -5,17 +5,29 @@ Vagrant.require_version ">= 1.6.0"
 
 boxes = [
     {
-        :name => "docker-node1",
-        :eth1 => "192.168.205.10",
+        :name => "gitlab",
+        :eth1 => "192.168.211.10",
+        :mem => "4096",
+        :cpu => "2"
+    },
+    {
+        :name => "gitlab-ci",
+        :eth1 => "192.168.211.11",
         :mem => "1024",
         :cpu => "1"
     },
     {
-        :name => "docker-node2",
-        :eth1 => "192.168.205.11",
-        :mem => "1024",
+        :name => "k8s-master",
+        :eth1 => "192.168.211.20",
+        :mem => "2048",
         :cpu => "1"
-    }
+    },
+    {
+        :name => "k8s-node",
+        :eth1 => "192.168.211.21",
+        :mem => "2048",
+        :cpu => "1"
+    },    
 ]
 
 Vagrant.configure(2) do |config|
@@ -39,7 +51,7 @@ Vagrant.configure(2) do |config|
       end
   end
 
-  config.vm.synced_folder "./labs", "/home/vagrant/labs", create:true, disabled:true
+  config.vm.synced_folder "./labs", "/home/vagrant/labs"
   config.vm.provision "shell", privileged: true, path: "./setup.sh"
 
 end
